@@ -15,17 +15,17 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Demand Signal
 
-- [ ] **DEMAND-01**: On submit, the backend fetches the top-ranking Google organic results for the keyword via Firecrawl (free tier) — capturing result titles and snippets, optionally top-page content
-- [ ] **DEMAND-02**: The backend parses the Firecrawl response into a compact demand-context payload, capped to stay within the LLM's token budget
+- [x] **DEMAND-01**: On submit, the backend fetches the top-ranking Google organic results for the keyword via Firecrawl (free tier) — capturing result titles and snippets, optionally top-page content
+- [x] **DEMAND-02**: The backend parses the Firecrawl response into a compact demand-context payload, capped to stay within the LLM's token budget
 
 ### Ideas
 
-- [ ] **IDEAS-01**: The backend sends the demand context to an LLM that synthesizes it into 8–12 ranked YouTube video ideas
-- [ ] **IDEAS-02**: Each idea includes a suggested video title
-- [ ] **IDEAS-03**: Each idea includes a primary search-intent label (informational / how-to / commercial / comparison)
-- [ ] **IDEAS-04**: Each idea includes a one-sentence rationale for why it should earn watch time
-- [ ] **IDEAS-05**: LLM output is schema-enforced and validated before it reaches the UI (8–12 well-formed ideas; malformed responses are handled, not rendered)
-- [ ] **IDEAS-06**: The LLM provider is swappable via an environment variable, defaulting to a genuinely free tier (Gemini 2.5 Flash); Anthropic Haiku is available as a swap-in
+- [x] **IDEAS-01**: The backend sends the demand context to an LLM that synthesizes it into 8–12 ranked YouTube video ideas
+- [x] **IDEAS-02**: Each idea includes a suggested video title
+- [x] **IDEAS-03**: Each idea includes a primary search-intent label (informational / how-to / commercial / comparison)
+- [x] **IDEAS-04**: Each idea includes a one-sentence rationale for why it should earn watch time
+- [x] **IDEAS-05**: LLM output is schema-enforced and validated before it reaches the UI (8–12 well-formed ideas; malformed responses are handled, not rendered)
+- [x] **IDEAS-06**: The LLM provider is swappable via an environment variable, defaulting to a genuinely free tier (Gemini 2.5 Flash); Anthropic Haiku is available as a swap-in
 
 ### Results UI
 
@@ -92,14 +92,14 @@ Which phases cover which requirements. Populated during roadmap creation.
 | INPUT-01 | Phase 3 | Pending |
 | INPUT-02 | Phase 3 | Pending |
 | INPUT-03 | Phase 3 | Pending |
-| DEMAND-01 | Phase 2 | Pending |
-| DEMAND-02 | Phase 2 | Pending |
-| IDEAS-01 | Phase 2 | Pending |
-| IDEAS-02 | Phase 2 | Pending |
-| IDEAS-03 | Phase 2 | Pending |
-| IDEAS-04 | Phase 2 | Pending |
-| IDEAS-05 | Phase 2 | Pending |
-| IDEAS-06 | Phase 2 | Pending |
+| DEMAND-01 | Phase 2 | Complete |
+| DEMAND-02 | Phase 2 | Complete |
+| IDEAS-01 | Phase 2 | Complete |
+| IDEAS-02 | Phase 2 | Complete |
+| IDEAS-03 | Phase 2 | Complete |
+| IDEAS-04 | Phase 2 | Complete |
+| IDEAS-05 | Phase 2 | Complete |
+| IDEAS-06 | Phase 2 | Complete |
 | UI-01 | Phase 3 | Pending |
 | UI-02 | Phase 3 | Pending |
 | UI-03 | Phase 3 | Pending |

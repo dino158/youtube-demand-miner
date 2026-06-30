@@ -47,7 +47,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Foundation: install AI SDK (ai + @ai-sdk/google + @ai-sdk/anthropic + zod), VideoIdea + error-code types, AppError envelope, Firecrawl /v2/search fetcher, token-capped demand parser, env-keyed provider factory (createGoogleGenerativeAI/createAnthropic), generateObject idea generator with 8-12 count enforcement [Wave 1]
+- [x] 02-01-PLAN.md — Foundation: install AI SDK (ai + @ai-sdk/google + @ai-sdk/anthropic + zod), VideoIdea + error-code types, AppError envelope, Firecrawl /v2/search fetcher, token-capped demand parser, env-keyed provider factory (createGoogleGenerativeAI/createAnthropic), generateObject idea generator with 8-12 count enforcement [Wave 1]
 - [ ] 02-02-PLAN.md — Orchestrator: wire api/generate.ts (Zod request validation -> Firecrawl+retry -> NO_RESULTS guard -> parser -> generateIdeas -> { ideas } / { error: { code, message } }), curl-verify the contract [Wave 2, depends on 02-01, has human-verify checkpoint]
 
 ### Phase 3: Frontend, UX & Export
