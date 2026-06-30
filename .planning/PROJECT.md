@@ -69,7 +69,7 @@ Turn what people are already searching for on Google into demand-grounded YouTub
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Astro 5 (`output: 'hybrid'`) for the frontend (over React) | Ships near-zero JS; cleanest fit for a tiny static page + one serverless function; matches "small and readable" goal. Astro 6 avoided due to known `@astrojs/vercel` SSR bugs | — Pending |
+| Astro 5 for the frontend (over React) | Ships near-zero JS; cleanest fit for a tiny static page + one serverless function; matches "small and readable" goal. Astro 6 avoided due to known `@astrojs/vercel` SSR bugs | ✓ Done (Phase 1) — `output: 'hybrid'` was removed in Astro 5; implemented as `output: 'static'` + per-route `prerender = false`. Adapter pinned to `@astrojs/vercel@9.0.5` (v11 requires Astro 7) |
 | Swappable LLM via Vercel AI SDK, default Gemini 2.5 Flash (truly $0) | Honors "everything free" — Gemini free tier has no per-token billing; AI SDK makes Haiku/Groq a one-env-var swap; Anthropic Haiku stays an optional swap-in | — Pending |
 | Demand signal = Firecrawl organic results (not PAA/related searches) | Firecrawl/Google block direct SERP-feature scraping; organic titles+snippets+content is the $0 path and keeps it simple; SerpApi PAA deferred to v2 | — Pending |
 | No endpoint guard (no auth, no rate-limiting infra) | Key secrecy is handled by architecture regardless; user accepts abuse risk; free-tier ceilings cap damage; keeps URL openly demoable | — Pending |
@@ -94,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-30 after initialization + research (demand-signal scope corrected to Firecrawl organic results)*
+*Last updated: 2026-06-30 — Phase 1 (Scaffold & Security) complete: Astro 5 + Vercel scaffold, server-only env security, gitleaks hook (DEPLOY-02 verified)*
