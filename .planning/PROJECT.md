@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A single-page web app where you enter a keyword or niche and get back a ranked list of YouTube video ideas grounded in real Google search demand. A serverless function scrapes Google's search results, People Also Ask, and related searches for the keyword, then an LLM synthesizes that demand into 8–12 concrete video concepts — each with a suggested title, the search intent behind it, and a one-line rationale for why it should earn watch time. It's a content-ideation tool for a channel that needs topics with proven demand, not guesses.
+A single-page web app where you enter a keyword or niche and get back a ranked list of YouTube video ideas grounded in real Google search demand. A serverless function uses Firecrawl to fetch the top-ranking Google results for the keyword (organic result titles, snippets, and optionally top-page content), then an LLM synthesizes that demand signal into 8–12 concrete video concepts — each with a suggested title, the search intent behind it, and a one-line rationale for why it should earn watch time. It's a content-ideation tool for a channel that needs topics with proven demand, not guesses.
 
 ## Core Value
 
@@ -21,8 +21,8 @@ Turn what people are already searching for on Google into demand-grounded YouTub
 <!-- Current scope. Building toward these. Hypotheses until shipped. -->
 
 - [ ] User enters a keyword/niche and clicks Generate
-- [ ] Backend scrapes the Google SERP for that keyword via Firecrawl (free tier), capturing top result titles, People Also Ask questions, and related searches
-- [ ] Backend passes scraped demand data to an LLM that clusters it and produces 8–12 YouTube video ideas
+- [ ] Backend fetches the top-ranking Google results for that keyword via Firecrawl (free tier) — capturing organic result titles, snippets, and optionally top-page content as the demand signal
+- [ ] Backend passes the scraped demand signal to an LLM that synthesizes it and produces 8–12 YouTube video ideas
 - [ ] Each idea returns: video title, primary search intent (informational / how-to / commercial / comparison), and a one-sentence rationale
 - [ ] Frontend displays ideas as clean cards
 - [ ] User can copy all ideas as markdown
@@ -46,9 +46,9 @@ Turn what people are already searching for on Google into demand-grounded YouTub
 ## Context
 
 - **Purpose & audience:** Built for a content creator who needs YouTube topics with proven search demand. Doubles as a portfolio/interview piece — the code must be simple enough to walk through and explain in an interview.
-- **Existing assets:** User has a Firecrawl API key (free tier) and an Anthropic API key. Anthropic stays available as an optional swap-in LLM provider, but the default must be a $0 provider (Google Gemini free tier is the leading candidate — to be confirmed in research). A free Google AI Studio key may need to be obtained for the default provider.
-- **Security model:** The only sensitive assets are the API keys. They live exclusively as serverless-function environment variables on Vercel — never in the frontend bundle, never committed (`.gitignore` excludes `.env`; repo ships `.env.example` with placeholders). The browser calls the function; the function calls Firecrawl/LLM. The browser never receives a key.
-- **Firecrawl fallback:** If Firecrawl's free tier proves too limited for SERP scraping, fall back to a free scraping approach.
+- **Existing assets:** User has a Firecrawl API key (free tier) and an Anthropic API key. Research confirmed the $0 default provider as **Google Gemini 2.5 Flash** (1,500 req/day free, no card, no expiry), accessed via the Vercel AI SDK so swapping to Anthropic Haiku (or Groq as a fallback) is a one-env-var change. A free Google AI Studio key needs to be obtained for the default provider; never enable billing on that Google project (it removes the free tier).
+- **Security model:** The only sensitive assets are the API keys. They live exclusively as serverless-function environment variables on Vercel — never in the frontend bundle, never committed (`.gitignore` excludes `.env`; repo ships `.env.example` with placeholders; keys are never `PUBLIC_`-prefixed). The browser calls the function; the function calls Firecrawl/LLM. The browser never receives a key.
+- **Demand signal (scope-corrected after research):** Firecrawl cannot scrape google.com directly (CAPTCHA) and cannot return People Also Ask or related searches as structured SERP fields. v1 therefore grounds demand on Firecrawl's `/search` organic results (titles + snippets, optionally top-page content). Structured PAA/related-searches via SerpApi's free tier (100 searches/mo) is a documented v2 upgrade path, not v1.
 - **Known tension:** "Everything free" vs. the Anthropic API billing per token — resolved by defaulting to a free LLM tier and keeping the provider swappable.
 
 ## Constraints
@@ -69,8 +69,9 @@ Turn what people are already searching for on Google into demand-grounded YouTub
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Astro for the frontend (over React) | Ships near-zero JS; cleanest fit for a tiny static page + serverless function; matches "small and readable" goal | — Pending |
-| Swappable LLM provider, default to a free tier (truly $0) | Honors the "everything free" constraint; Anthropic bills per token; abstraction keeps Anthropic available as optional swap-in | — Pending |
+| Astro 5 (`output: 'hybrid'`) for the frontend (over React) | Ships near-zero JS; cleanest fit for a tiny static page + one serverless function; matches "small and readable" goal. Astro 6 avoided due to known `@astrojs/vercel` SSR bugs | — Pending |
+| Swappable LLM via Vercel AI SDK, default Gemini 2.5 Flash (truly $0) | Honors "everything free" — Gemini free tier has no per-token billing; AI SDK makes Haiku/Groq a one-env-var swap; Anthropic Haiku stays an optional swap-in | — Pending |
+| Demand signal = Firecrawl organic results (not PAA/related searches) | Firecrawl/Google block direct SERP-feature scraping; organic titles+snippets+content is the $0 path and keeps it simple; SerpApi PAA deferred to v2 | — Pending |
 | No endpoint guard (no auth, no rate-limiting infra) | Key secrecy is handled by architecture regardless; user accepts abuse risk; free-tier ceilings cap damage; keeps URL openly demoable | — Pending |
 | Single serverless function, single endpoint | Keeps the system minimal and fits Vercel free tier | — Pending |
 | No database for v1 | Results render on screen and export as markdown/JSON; no persistence need | — Pending |
@@ -93,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-30 after initialization*
+*Last updated: 2026-06-30 after initialization + research (demand-signal scope corrected to Firecrawl organic results)*
