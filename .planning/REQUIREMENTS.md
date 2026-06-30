@@ -43,7 +43,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Deploy & Ops
 
 - [ ] **DEPLOY-01**: The app deploys to Vercel's free hobby tier as a static Astro frontend plus a single serverless function
-- [ ] **DEPLOY-02**: All API keys are read only from server-side environment variables — none are committed or exposed in the browser bundle
+- [x] **DEPLOY-02**: All API keys are read only from server-side environment variables — none are committed or exposed in the browser bundle
 - [ ] **DEPLOY-03**: A README documents setup, required env vars, and deployment using only free tiers
 - [ ] **DEPLOY-04**: End-to-end keyword → rendered idea list completes in ~20 seconds under normal conditions
 
@@ -89,34 +89,34 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INPUT-01 | (pending roadmap) | Pending |
-| INPUT-02 | (pending roadmap) | Pending |
-| INPUT-03 | (pending roadmap) | Pending |
-| DEMAND-01 | (pending roadmap) | Pending |
-| DEMAND-02 | (pending roadmap) | Pending |
-| IDEAS-01 | (pending roadmap) | Pending |
-| IDEAS-02 | (pending roadmap) | Pending |
-| IDEAS-03 | (pending roadmap) | Pending |
-| IDEAS-04 | (pending roadmap) | Pending |
-| IDEAS-05 | (pending roadmap) | Pending |
-| IDEAS-06 | (pending roadmap) | Pending |
-| UI-01 | (pending roadmap) | Pending |
-| UI-02 | (pending roadmap) | Pending |
-| UI-03 | (pending roadmap) | Pending |
-| UI-04 | (pending roadmap) | Pending |
-| EXPORT-01 | (pending roadmap) | Pending |
-| EXPORT-02 | (pending roadmap) | Pending |
-| EXPORT-03 | (pending roadmap) | Pending |
-| DEPLOY-01 | (pending roadmap) | Pending |
-| DEPLOY-02 | (pending roadmap) | Pending |
-| DEPLOY-03 | (pending roadmap) | Pending |
-| DEPLOY-04 | (pending roadmap) | Pending |
+| INPUT-01 | Phase 3 | Pending |
+| INPUT-02 | Phase 3 | Pending |
+| INPUT-03 | Phase 3 | Pending |
+| DEMAND-01 | Phase 2 | Pending |
+| DEMAND-02 | Phase 2 | Pending |
+| IDEAS-01 | Phase 2 | Pending |
+| IDEAS-02 | Phase 2 | Pending |
+| IDEAS-03 | Phase 2 | Pending |
+| IDEAS-04 | Phase 2 | Pending |
+| IDEAS-05 | Phase 2 | Pending |
+| IDEAS-06 | Phase 2 | Pending |
+| UI-01 | Phase 3 | Pending |
+| UI-02 | Phase 3 | Pending |
+| UI-03 | Phase 3 | Pending |
+| UI-04 | Phase 3 | Pending |
+| EXPORT-01 | Phase 3 | Pending |
+| EXPORT-02 | Phase 3 | Pending |
+| EXPORT-03 | Phase 3 | Pending |
+| DEPLOY-01 | Phase 4 | Pending |
+| DEPLOY-02 | Phase 1 | Complete |
+| DEPLOY-03 | Phase 4 | Pending |
+| DEPLOY-04 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 22 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 22 ⚠️ (resolved by roadmap creation)
+- Mapped to phases: 22 (roadmap complete)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-06-30*
-*Last updated: 2026-06-30 after initial definition*
+*Last updated: 2026-06-30 — traceability populated after roadmap creation*

@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md — Scaffold Astro 5 in repo root (Vercel v11 adapter, Tailwind v4 Vite plugin, output:'static' + prerender=false), maxDuration:60 in adapter + vercel.json, env security (astro:env server schema, .gitignore, .env.example, gitleaks pre-commit hook)
+- [x] 01-01-PLAN.md — Scaffold Astro 5 in repo root (Vercel v11 adapter, Tailwind v4 Vite plugin, output:'static' + prerender=false), maxDuration:60 in adapter + vercel.json, env security (astro:env server schema, .gitignore, .env.example, gitleaks pre-commit hook)
 
 ### Phase 2: Backend Pipeline
 **Goal**: `POST /api/generate` accepts `{ keyword }` and returns `{ ideas: VideoIdea[] }` — verified with curl against a Vercel preview deployment
