@@ -1,6 +1,6 @@
-// src/pages/api/generate.ts
 export const prerender = false;  // MUST be first — makes this a serverless function
 
+// src/pages/api/generate.ts
 import type { APIRoute } from 'astro';
 
 export const POST: APIRoute = async ({ request }) => {
