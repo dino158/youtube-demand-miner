@@ -1,16 +1,51 @@
 ---
-// src/pages/index.astro — Phase 1 placeholder
+// src/pages/index.astro — Phase 3: static shell (form + hidden state regions + client island)
 import '../styles/global.css';
 ---
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>YouTube Demand Miner</title>
   </head>
-  <body class="min-h-screen bg-gray-50">
-    <main class="max-w-2xl mx-auto p-8">
-      <h1 class="text-3xl font-bold">YouTube Demand Miner</h1>
-      <p class="mt-2 text-gray-600">Placeholder — Phase 3 wires the UI.</p>
+  <body class="min-h-screen bg-gray-50 text-gray-900">
+    <main class="max-w-2xl mx-auto px-4 py-8">
+      <h1 class="text-2xl sm:text-3xl font-bold">YouTube Demand Miner</h1>
+      <p class="mt-1 text-gray-600">Turn what people search for on Google into demand-grounded YouTube video ideas.</p>
+
+      <form id="generate-form" class="mt-6 flex flex-col gap-2" novalidate>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input
+            id="keyword"
+            name="keyword"
+            type="text"
+            minlength="3"
+            required
+            autocomplete="off"
+            placeholder="e.g. drone photography"
+            class="flex-1 rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            id="generate-btn"
+            type="submit"
+            class="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >Generate</button>
+        </div>
+        <p id="input-error" class="hidden text-sm text-red-600" role="alert"></p>
+      </form>
+
+      <!-- UI-02: step-labeled progress region (NOT a bare spinner) -->
+      <div id="progress" class="mt-6 hidden flex items-center gap-3 text-gray-700" role="status" aria-live="polite">
+        <span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600" aria-hidden="true"></span>
+        <span id="progress-label"></span>
+      </div>
+
+      <!-- UI-03: request-error region (specific per-code message goes here) -->
+      <div id="error" class="mt-6 hidden rounded-md border border-red-200 bg-red-50 px-4 py-3 text-red-700" role="alert"></div>
+
+      <!-- UI-01: results container — one card per idea appended here by app.ts -->
+      <div id="results" class="mt-6 hidden flex flex-col gap-4"></div>
     </main>
+    <script src="../scripts/app.ts"></script>
   </body>
 </html>
