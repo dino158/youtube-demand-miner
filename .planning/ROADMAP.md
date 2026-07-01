@@ -60,11 +60,11 @@ Plans:
   3. Each idea renders as a card showing the video title, intent label, and one-sentence rationale; cards are readable on a 375px-wide mobile screen in a single column
   4. On failure, the UI displays a specific message distinguishing rate-limit, network, and no-results cases — it does not show a raw error object or go blank
   5. User can copy a single idea card to the clipboard, copy all ideas as formatted markdown, and download all results as a JSON file — each with one button click
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: Static Astro shell (index.astro), input form with validation, loading/error state UI, mobile-responsive layout
-- [ ] 03-02: Client island (app.ts) wired to /api/generate, card rendering, export/copy actions (individual, markdown, JSON)
+- [ ] 03-01-PLAN.md — Static Astro shell: rewrite index.astro with the keyword form (minlength 3, required), four hidden state regions (input-error, progress+label, error, results), mobile-first single-column Tailwind layout, and the app.ts module script include [Wave 1]
+- [ ] 03-02-PLAN.md — Client island app.ts wired to /api/generate: min-3 client validation, in-flight button disable, simulated timed progress labels, 5-code error taxonomy + network-failure map, XSS-safe idea cards with intent badges, and copy-one/copy-all-markdown/download-JSON export actions [Wave 2, depends on 03-01, has human-verify checkpoint]
 **UI hint**: yes
 
 ### Phase 4: Deploy & Ops
@@ -90,5 +90,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Scaffold & Security | 0/1 | Not started | - |
 | 2. Backend Pipeline | 0/2 | Not started | - |
-| 3. Frontend, UX & Export | 0/2 | Not started | - |
+| 3. Frontend, UX & Export | 0/2 | In progress | - |
 | 4. Deploy & Ops | 0/1 | Not started | - |
