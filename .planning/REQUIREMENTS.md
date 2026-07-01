@@ -11,7 +11,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **INPUT-01**: User can enter a keyword/niche in a single text field and start generation via a Generate button (and the Enter key)
 - [x] **INPUT-02**: User is prevented from submitting an empty or too-short keyword (min ~3 characters), with inline feedback
-- [ ] **INPUT-03**: The Generate control is disabled while a request is in flight, preventing duplicate submissions and accidental free-tier burn
+- [x] **INPUT-03**: The Generate control is disabled while a request is in flight, preventing duplicate submissions and accidental free-tier burn
 
 ### Demand Signal
 
@@ -29,16 +29,16 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Results UI
 
-- [ ] **UI-01**: Results render as clean cards — one per idea — showing the title, intent label, and rationale
+- [x] **UI-01**: Results render as clean cards — one per idea — showing the title, intent label, and rationale
 - [x] **UI-02**: While generating, the UI shows a progress/loading state with step labels (not just a spinner), since the pipeline takes ~15–25s
 - [x] **UI-03**: On failure, the UI shows a specific error message distinguishing common cases (rate-limit vs. network vs. no results)
 - [x] **UI-04**: The layout is mobile-responsive (single-column)
 
 ### Export
 
-- [ ] **EXPORT-01**: User can copy all ideas as formatted markdown with one button
-- [ ] **EXPORT-02**: User can export/download all results as JSON
-- [ ] **EXPORT-03**: User can copy an individual idea to the clipboard
+- [x] **EXPORT-01**: User can copy all ideas as formatted markdown with one button
+- [x] **EXPORT-02**: User can export/download all results as JSON
+- [x] **EXPORT-03**: User can copy an individual idea to the clipboard
 
 ### Deploy & Ops
 
@@ -91,7 +91,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 |-------------|-------|--------|
 | INPUT-01 | Phase 3 | Complete |
 | INPUT-02 | Phase 3 | Complete |
-| INPUT-03 | Phase 3 | Pending |
+| INPUT-03 | Phase 3 | Complete |
 | DEMAND-01 | Phase 2 | Complete |
 | DEMAND-02 | Phase 2 | Complete |
 | IDEAS-01 | Phase 2 | Complete |
@@ -100,13 +100,13 @@ Which phases cover which requirements. Populated during roadmap creation.
 | IDEAS-04 | Phase 2 | Complete |
 | IDEAS-05 | Phase 2 | Complete |
 | IDEAS-06 | Phase 2 | Complete |
-| UI-01 | Phase 3 | Pending |
+| UI-01 | Phase 3 | Complete |
 | UI-02 | Phase 3 | Complete |
 | UI-03 | Phase 3 | Complete |
 | UI-04 | Phase 3 | Complete |
-| EXPORT-01 | Phase 3 | Pending |
-| EXPORT-02 | Phase 3 | Pending |
-| EXPORT-03 | Phase 3 | Pending |
+| EXPORT-01 | Phase 3 | Complete |
+| EXPORT-02 | Phase 3 | Complete |
+| EXPORT-03 | Phase 3 | Complete |
 | DEPLOY-01 | Phase 4 | Pending |
 | DEPLOY-02 | Phase 1 | Complete |
 | DEPLOY-03 | Phase 4 | Pending |
