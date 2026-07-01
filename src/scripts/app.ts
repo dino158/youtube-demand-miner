@@ -222,6 +222,13 @@ function initApp(
         headers: { 'Content-Type': 'application/json' }, // REQUIRED
         body: JSON.stringify({ keyword }),
       });
+      // 504 = Vercel killed the function at maxDuration; body is non-JSON (HTML), so
+      // branch BEFORE res.json() (which would throw and wrongly show the network message).
+      // The function cannot catch its own maxDuration kill — handled purely client-side (D-04).
+      if (res.status === 504) {
+        showError('The free tier is busy right now — please try again in a moment.');
+        return;
+      }
       const data = await res.json(); // body is { ideas } or { error:{code,message} } — always JSON
       if (!res.ok) {
         showError(mapError(data.error?.code, data.error?.message));
