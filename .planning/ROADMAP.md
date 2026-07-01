@@ -63,7 +63,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Static Astro shell: rewrite index.astro with the keyword form (minlength 3, required), four hidden state regions (input-error, progress+label, error, results), mobile-first single-column Tailwind layout, and the app.ts module script include [Wave 1]
+- [x] 03-01-PLAN.md — Static Astro shell: rewrite index.astro with the keyword form (minlength 3, required), four hidden state regions (input-error, progress+label, error, results), mobile-first single-column Tailwind layout, and the app.ts module script include [Wave 1]
 - [ ] 03-02-PLAN.md — Client island app.ts wired to /api/generate: min-3 client validation, in-flight button disable, simulated timed progress labels, 5-code error taxonomy + network-failure map, XSS-safe idea cards with intent badges, and copy-one/copy-all-markdown/download-JSON export actions [Wave 2, depends on 03-01, has human-verify checkpoint]
 **UI hint**: yes
 
