@@ -186,13 +186,14 @@ function initApp(
     return article;
   }
 
-  // NOTE: Task 2 adds an export toolbar (Copy all / Download JSON) prepended
-  // above the cards. Left as a placeholder container insertion point here.
   function renderCards(ideas: VideoIdea[]) {
     stopProgress();
     hide(errorEl);
     currentIdeas = ideas; // currentKeyword is set in the submit handler before this runs
     resultsEl.replaceChildren();
+
+    const toolbar = buildExportToolbar();
+    resultsEl.appendChild(toolbar);
 
     for (const idea of ideas) {
       resultsEl.appendChild(buildCard(idea));
@@ -234,4 +235,109 @@ function initApp(
       generateBtn.disabled = false; // re-enable on BOTH success and failure
     }
   });
+
+  // =========================================================================
+  // Export actions (EXPORT-01/02/03)
+  // =========================================================================
+
+  // -------------------------------------------------------------------------
+  // Clipboard helper (native async Clipboard API)
+  // -------------------------------------------------------------------------
+  async function copyText(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function flashButtonLabel(btn: HTMLButtonElement, success: boolean) {
+    const original = btn.textContent;
+    btn.textContent = success ? 'Copied!' : 'Copy failed';
+    setTimeout(() => {
+      btn.textContent = original;
+    }, 1500);
+  }
+
+  // -------------------------------------------------------------------------
+  // EXPORT-03 — copy a single idea (event delegation on #results)
+  // -------------------------------------------------------------------------
+  resultsEl.addEventListener('click', async (e) => {
+    const target = e.target as HTMLElement;
+    const copyOneBtn = target.closest('.copy-one') as HTMLButtonElement | null;
+    if (!copyOneBtn) return;
+    const id = copyOneBtn.dataset.id;
+    const idea = currentIdeas.find((i) => i.id === id);
+    if (!idea) return;
+    const text = `${idea.title}\nIntent: ${idea.intent}\n${idea.rationale}`;
+    const ok = await copyText(text);
+    flashButtonLabel(copyOneBtn, ok);
+  });
+
+  // -------------------------------------------------------------------------
+  // Export toolbar — built once per renderCards call, prepended above cards
+  // -------------------------------------------------------------------------
+  function buildExportToolbar(): HTMLElement {
+    const toolbar = document.createElement('div');
+    toolbar.className = 'flex flex-wrap gap-2 mb-2';
+
+    const copyAllBtn = document.createElement('button');
+    copyAllBtn.id = 'copy-all';
+    copyAllBtn.type = 'button';
+    copyAllBtn.className = 'rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100';
+    copyAllBtn.textContent = 'Copy all (Markdown)';
+    copyAllBtn.addEventListener('click', async () => {
+      const markdown = buildMarkdown(currentKeyword, currentIdeas);
+      const ok = await copyText(markdown);
+      flashButtonLabel(copyAllBtn, ok);
+    });
+
+    const downloadBtn = document.createElement('button');
+    downloadBtn.id = 'download-json';
+    downloadBtn.type = 'button';
+    downloadBtn.className = 'rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100';
+    downloadBtn.textContent = 'Download JSON';
+    downloadBtn.addEventListener('click', () => {
+      const slug = currentKeyword
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+      const filename = slug ? `youtube-ideas-${slug}.json` : 'youtube-ideas.json';
+      downloadJSON({ keyword: currentKeyword, ideas: currentIdeas }, filename);
+    });
+
+    toolbar.appendChild(copyAllBtn);
+    toolbar.appendChild(downloadBtn);
+    return toolbar;
+  }
+
+  // -------------------------------------------------------------------------
+  // EXPORT-01 — copy all ideas as markdown
+  // -------------------------------------------------------------------------
+  function buildMarkdown(keyword: string, ideas: VideoIdea[]): string {
+    const items = ideas
+      .map(
+        (idea, i) =>
+          `${i + 1}. **${idea.title}**\n   - Intent: ${idea.intent}\n   - ${idea.rationale}`,
+      )
+      .join('\n\n');
+    return `# YouTube video ideas for "${keyword}"\n\n${items}`;
+  }
+
+  // -------------------------------------------------------------------------
+  // EXPORT-02 — download all results as JSON
+  // -------------------------------------------------------------------------
+  function downloadJSON(data: unknown, filename: string) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url); // memory hygiene — do NOT skip
+  }
 }
