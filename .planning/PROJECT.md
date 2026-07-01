@@ -18,16 +18,15 @@ Turn what people are already searching for on Google into demand-grounded YouTub
 - [x] Backend passes the scraped demand signal to an LLM that synthesizes it and produces 8–12 YouTube video ideas *(Validated in Phase 2 — live curl returned 200 + 9 ideas in 13s)*
 - [x] Each idea returns: video title, primary search intent (informational / how-to / commercial / comparison), and a one-sentence rationale *(Validated in Phase 2 — schema-enforced in `types.ts`, confirmed live)*
 - [x] LLM provider is swappable via configuration, defaulting to a genuinely free tier (zero spend) *(Validated in Phase 2 — env-keyed factory in `llm-provider.ts`, Gemini 2.5 Flash default live-proven)*
+- [x] User enters a keyword/niche and clicks Generate *(Validated in Phase 3: Frontend UX & Export — real `<form>` in `index.astro`, submit handler in `app.ts`, Enter+click, human-verified)*
+- [x] Frontend displays ideas as clean cards *(Validated in Phase 3 — one XSS-safe card per idea with intent badge + rationale, single-column at 375px)*
+- [x] User can copy all ideas as markdown *(Validated in Phase 3 — "Copy all (Markdown)" via `navigator.clipboard`; also per-card copy)*
+- [x] User can export results as JSON *(Validated in Phase 3 — "Download JSON" via Blob + `URL.createObjectURL`, `{ keyword, ideas }` payload)*
 
 ### Active
 
 <!-- Current scope. Building toward these. Hypotheses until shipped. -->
 
-- [ ] User enters a keyword/niche and clicks Generate
-- [ ] Frontend displays ideas as clean cards
-- [ ] User can copy all ideas as markdown
-- [ ] User can export results as JSON
-- [ ] LLM provider is swappable via configuration, defaulting to a genuinely free tier (zero spend)
 - [ ] Deploys free to Vercel as a static Astro frontend + a single serverless function
 - [ ] README documents setup, required env vars, and deployment — all on free tiers only
 - [ ] End-to-end keyword → usable idea list returns in ~20 seconds
@@ -94,4 +93,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-01 — Phase 2 (Backend Pipeline) complete: `POST /api/generate` orchestrates Firecrawl `/v2/search` → token-capped demand parser → env-keyed LLM (Gemini default) → count-enforced ideas, all behind the `{ ideas }` / `{ error: { code, message } }` envelope; live-verified (200, 9 ideas, 13s). DEMAND-01/02, IDEAS-01..06 satisfied*
+*Last updated: 2026-07-01 — Phase 3 (Frontend UX & Export) complete: `index.astro` static shell + `app.ts` client island deliver the full keyword→ideas UX — min-3 validation, in-flight button disable, 4-step simulated progress, `POST /api/generate` with a 5-code error taxonomy, XSS-safe idea cards, and copy/markdown/JSON export; human-verified at 375px. INPUT-01/02/03, UI-01/02/03/04, EXPORT-01/02/03 satisfied. Carried-forward concern → Phase 4: Gemini free-tier generation observed at 69.4s, exceeding the 60s Vercel `maxDuration` (raise timeout / add provider fallback at deploy).*
