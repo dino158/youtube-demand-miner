@@ -14,16 +14,16 @@ Turn what people are already searching for on Google into demand-grounded YouTub
 
 <!-- Shipped and confirmed valuable. -->
 
-(None yet — ship to validate)
+- [x] Backend fetches the top-ranking Google results for that keyword via Firecrawl (free tier) — capturing organic result titles + snippets as the demand signal *(Validated in Phase 2: Backend Pipeline — `firecrawl.ts` /v2/search, live-confirmed)*
+- [x] Backend passes the scraped demand signal to an LLM that synthesizes it and produces 8–12 YouTube video ideas *(Validated in Phase 2 — live curl returned 200 + 9 ideas in 13s)*
+- [x] Each idea returns: video title, primary search intent (informational / how-to / commercial / comparison), and a one-sentence rationale *(Validated in Phase 2 — schema-enforced in `types.ts`, confirmed live)*
+- [x] LLM provider is swappable via configuration, defaulting to a genuinely free tier (zero spend) *(Validated in Phase 2 — env-keyed factory in `llm-provider.ts`, Gemini 2.5 Flash default live-proven)*
 
 ### Active
 
 <!-- Current scope. Building toward these. Hypotheses until shipped. -->
 
 - [ ] User enters a keyword/niche and clicks Generate
-- [ ] Backend fetches the top-ranking Google results for that keyword via Firecrawl (free tier) — capturing organic result titles, snippets, and optionally top-page content as the demand signal
-- [ ] Backend passes the scraped demand signal to an LLM that synthesizes it and produces 8–12 YouTube video ideas
-- [ ] Each idea returns: video title, primary search intent (informational / how-to / commercial / comparison), and a one-sentence rationale
 - [ ] Frontend displays ideas as clean cards
 - [ ] User can copy all ideas as markdown
 - [ ] User can export results as JSON
@@ -70,10 +70,10 @@ Turn what people are already searching for on Google into demand-grounded YouTub
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
 | Astro 5 for the frontend (over React) | Ships near-zero JS; cleanest fit for a tiny static page + one serverless function; matches "small and readable" goal. Astro 6 avoided due to known `@astrojs/vercel` SSR bugs | ✓ Done (Phase 1) — `output: 'hybrid'` was removed in Astro 5; implemented as `output: 'static'` + per-route `prerender = false`. Adapter pinned to `@astrojs/vercel@9.0.5` (v11 requires Astro 7) |
-| Swappable LLM via Vercel AI SDK, default Gemini 2.5 Flash (truly $0) | Honors "everything free" — Gemini free tier has no per-token billing; AI SDK makes Haiku/Groq a one-env-var swap; Anthropic Haiku stays an optional swap-in | — Pending |
-| Demand signal = Firecrawl organic results (not PAA/related searches) | Firecrawl/Google block direct SERP-feature scraping; organic titles+snippets+content is the $0 path and keeps it simple; SerpApi PAA deferred to v2 | — Pending |
+| Swappable LLM via Vercel AI SDK, default Gemini 2.5 Flash (truly $0) | Honors "everything free" — Gemini free tier has no per-token billing; AI SDK makes Haiku/Groq a one-env-var swap; Anthropic Haiku stays an optional swap-in | ✓ Done (Phase 2) — `getModel()` factory keyed on `LLM_PROVIDER`; Gemini path live-proven (200, 9 ideas, 13s); Haiku swap is a zero-code env flip (runtime swap unconfirmed, non-blocking) |
+| Demand signal = Firecrawl organic results (not PAA/related searches) | Firecrawl/Google block direct SERP-feature scraping; organic titles+snippets+content is the $0 path and keeps it simple; SerpApi PAA deferred to v2 | ✓ Done (Phase 2) — `firecrawl.ts` calls `/v2/search` (10 web results, no scrapeOptions); `data.web` shape live-confirmed |
 | No endpoint guard (no auth, no rate-limiting infra) | Key secrecy is handled by architecture regardless; user accepts abuse risk; free-tier ceilings cap damage; keeps URL openly demoable | — Pending |
-| Single serverless function, single endpoint | Keeps the system minimal and fits Vercel free tier | — Pending |
+| Single serverless function, single endpoint | Keeps the system minimal and fits Vercel free tier | ✓ Done (Phase 2) — `POST /api/generate` orchestrator; build emits a single `_render.func` |
 | No database for v1 | Results render on screen and export as markdown/JSON; no persistence need | — Pending |
 
 ## Evolution
@@ -94,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-30 — Phase 1 (Scaffold & Security) complete: Astro 5 + Vercel scaffold, server-only env security, gitleaks hook (DEPLOY-02 verified)*
+*Last updated: 2026-07-01 — Phase 2 (Backend Pipeline) complete: `POST /api/generate` orchestrates Firecrawl `/v2/search` → token-capped demand parser → env-keyed LLM (Gemini default) → count-enforced ideas, all behind the `{ ideas }` / `{ error: { code, message } }` envelope; live-verified (200, 9 ideas, 13s). DEMAND-01/02, IDEAS-01..06 satisfied*
